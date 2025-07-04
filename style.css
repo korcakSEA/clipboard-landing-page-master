@@ -16,10 +16,6 @@
     --font-size-14:clamp(0.78rem, 1vw + 0.5rem, 1rem);
     --font-size-16:clamp(0.89rem, 0.9vw + 0.6rem, 1rem);
 
-    --font-h1: clamp(1.8rem, 5vw, 2.78rem);   /* 32.4px – 50px */
-    --font-h2: clamp(1.72rem, 4.2vw, 2.11rem); /* 31px – 38px */
-    --font-h3: clamp(1.33rem, 3.5vw, 1.67rem); /* 24px – 30px */
-
 
     /*** Spacing ***/
     --space-xs: 1.11rem;   /* 20px */
@@ -57,6 +53,7 @@
 
 html{
     font-size: 18px;
+    scroll-behavior: smooth;
 }
 
 body{
@@ -86,15 +83,15 @@ h1, h2, h3{
 }
 
 h1 {
-  font-size: var(--font-h1);
+    font-size: clamp(1.8rem, 5vw, 2.78rem);   /* 32.4px – 50px */
 }
 
 h2{
-    font-size: var(--font-h2);
+    font-size:clamp(1.72rem, 4.2vw, 2.11rem); /* 31px – 38px */
 }
 
 h3{
-    font-size: var(--font-h3);
+    font-size: clamp(1.33rem, 3.5vw, 1.67rem); /* 24px – 30px */
 }
 
 img, svg{
@@ -108,7 +105,7 @@ footer{
 }
 
 .container{
-    width:min(82.5%, 1120px);
+    width:min(82.5%, 1150px);
     margin: 0 auto;
     text-align: center;
 }
@@ -116,7 +113,6 @@ footer{
 .grid-flow{
     display: grid;
     align-content: start;
-    gap: var(--space-2xl);
     place-items: center;
 }
 
@@ -128,49 +124,39 @@ footer{
     gap: var(--space-md);
 }
 
+.grid-flow[data-spacing="large"], .flex-flow[data-spacing="large"]{
+    gap: var(--space-2xl);
+}
+
 .flex-flow{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+
+/* Classes using only spacing */
+
 .hero{
     margin-top: var(--space-2xl);
 }
 
-.hero__logo{
+/* I know there are many classes , 
+probably I can make a single class using specific spacing */
+.hero__logo, .main-testimonial, .attribute__text{
     margin-bottom: var(--space-sm);
 }
 
-.hero__text{
+.hero__text, .feature__header, .attribute__img{
     margin-bottom: var(--space-xs);
 }
 
-.main__text{
+.main__text, .attribute__item{
     margin-bottom: var(--space-md);
 }
 
-.feature__header{
-    margin-bottom: var(--space-xs);
-}
 .feature__text{
     margin-bottom: calc(var(--space-xs)*2.5);
-}
-
-.main-testimonial{
-    margin-bottom: var(--space-sm);
-}
-
-.attribute__item{
-    margin-bottom: var(--font-md);
-}
-
-.attribute__img{
-    margin-bottom: var(--space-xs);
-}
-
-.attribute__text{
-    margin-bottom: var(--space-sm);
 }
 
 .main-bottom{
@@ -201,15 +187,24 @@ footer .social-links{
 
 .footer__info{
     list-style: none;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
 }
 
-.footer__info li{
-    margin-bottom: calc(var(--space-xs)*1.5);
+.footer__info a{
+    text-decoration: none;
+    color: var(--Gray-700);
 }
 
+.footer__info a:hover,
+.footer__info a:focus{
+    color: var(--green-500-hsl) ;
+}
 
+.social-links__logo:hover path {
+  fill: var(--green-500-hsl);
+}
 
 .button{
     display:flex ;
@@ -234,15 +229,15 @@ footer .social-links{
 .btn__iOS{
     background-color: var(--green-500-hsl);
     border-bottom: 2px solid hsl(171, 66%, 34%);
-    box-shadow: 0 4px 6px -2px  var(--green-500-hsl);
+    box-shadow:  0 4px 6px -2px hsl(var(--Green-500), 0.5);
 }
 
 .btn__iOS:hover,
 .btn__iOS:focus{
-    background-color: hsl(var(--Green-500),0.9);
+    background-color: hsl(var(--Green-500),0.8);
 }
 
-.btn__Mac{
+.btn__Mac{  
     background-color: var(--blue-500-hsl);
     border-bottom: 2px solid hsl(233, 100%, 57%);
     box-shadow: 0 4px 6px -2px  var(--blue-500-hsl);
@@ -250,21 +245,45 @@ footer .social-links{
 
 .btn__Mac:hover,
 .btn__Mac:focus{
-    background-color: hsl(var( --Blue-100),0.9);
+    background-color: hsl(var( --Blue-100),0.8);
 }
 
 
 
-@media (min-width:56.25rem){
+@media (min-width:64rem){
     body{
         background-image: url(./images/bg-header-desktop.png);
     }
 
-    .main-feature{
+    .main-feature.flex-flow[data-spacing="medium"]{
         position: relative;
-        left:-40%;
-        
+        left: -6vw;
+
     }
+
+    .feature__container{
+        /* width: 60%; */
+        flex: 3;
+        /* position: relative; */
+        /* left: -15vw; */
+    }
+
+    .feature__image{
+        position: relative;
+        left:-6vw;
+        
+    }   
+
+    .feature__items{
+        flex: 2;
+        margin-left: 2rem;
+    }
+
+    .feature__text{
+        margin-bottom: calc(var(--space-xs)*1.5);
+    
+    }
+
 
     .main__text{
         width: 75%;
@@ -283,6 +302,14 @@ footer .social-links{
         flex-direction: row;
     }
 
+    .feature__items{
+        align-self: center;
+    }
+
+    .feature__item{
+        text-align: left;
+    }
+
     .main-testimonial{
         width: 100%;
         
@@ -299,21 +326,24 @@ footer .social-links{
 
     .footer__flex{
         flex-direction: row;
-        justify-content: space-between;
+        gap: 4rem ;
         align-items: center;
     }
 
     .footer__info{
-        flex-direction: row;
-        flex-wrap: wrap;
-        width: 60%;
-        gap: 4rem;
-        align-items:center;
+        grid-template-columns: repeat(3, minmax(150px, 1fr));
+        text-align: left;
+        gap: 1rem;
     }
 
-    .footer__logo, .footer__info li, footer .social-links{
+    .footer__logo, footer .social-links{
         margin: 0;
     }
+    footer .social-links{
+        margin-left: auto;
+    }
+
+
 }
 
 
